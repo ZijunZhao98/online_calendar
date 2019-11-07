@@ -1,0 +1,114 @@
+.weekdays {
+    background-color:#e3e4e8;
+    padding: 5px;
+}
+
+.la {
+    display: inline-block;
+    color: #59595b;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.month {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100%;
+  background: #6fc4bc;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.month-display{
+  color: white;
+  font-size: 20px;
+  letter-spacing: 3px;
+}
+
+.da {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 80px;
+}
+
+.ro {
+  border-style: solid;
+  border-color: #e8e8e8;
+  border-width: 1px;
+}
+
+.No:hover{
+  background-color: #e5e5e5;
+}
+
+.Work {
+  background-color: #ff7a87;
+}
+
+.Work:hover {
+  background-color: #ff495a;
+}
+
+.School {
+  background-color: #ffa770;
+}
+
+.School:hover {
+  background-color: #f7833b;
+}
+
+.ToDo {
+  background-color: #baefef;
+}
+
+.ToDo:hover {
+  background-color: #8acece;
+}
+
+.col-xs-7ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-7ths {
+    width: 14.28%;
+    float: left;
+}
+
+.notInMonth {
+    color: black;
+}
+
+.notInMonth {
+    color: #a5a5a5;
+}
+
+.buttons{
+  margin-top: 10px;
+}
+
+#prev_month_btn {
+    float: left;
+    padding-top: 30px;
+}
+
+#next_month_btn {
+    float: right;
+    padding-top: 30px;
+}
+
+#currentMonth {
+    align-self: center;
+}
+
+#currentYear{
+    font-size: 20px;
+}
+
+#currentMonth{
+    font-size: 40px;
+}

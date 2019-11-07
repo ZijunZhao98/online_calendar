@@ -1,0 +1,338 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Calendar</title>
+        <link rel="stylesheet" href="calendar.css">
+        <meta charset="utf-8">
+        <!-- I choose to use bootstrap as an external library -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+      <div class="buttons container">
+        <div class="row">
+          <div class = "col-xs-1">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#loginModal" id="login">Login</button>
+          </div>
+          <div class = "col-xs-1">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#registerModal" id="register">Register</button>
+          </div>
+          <div class = "col-xs-4"></div>
+          <div class = "col-xs-1">
+            <button type="button" class="btn btn-info" id="back">Back</button>
+          </div>
+          <div class = "col-xs-2">
+            <div class="dropdown" id="DropDown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="shareMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Shared Calendars
+              </button>
+              <div class="dropdown-menu" aria-label="dropdownMenuButton" id="shareItems">
+              </div>
+            </div>
+          </div>
+          <div class = "col-xs-2">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addEventModal" id="addEvent">AddEvent</button>
+          </div>
+          <div class = "col-xs-1">
+            <button type="button" class="btn btn-info" id="logout">Logout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login modal -->
+      <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="loginModalLabel">Welcome!</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="loginForm">
+                <div class="form-group">
+                  <label class="col-form-label">User name: </label>
+                  <input type = "text" class="form-control" name = "username" id="login-username"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Password: </label>
+                  <input type="text" class="form-control" name="password" id="login-password"/>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="login_btn">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Register modal -->
+      <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="registerModalLabel">Welcome!</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="registerForm">
+                <div class="form-group">
+                  <label class="col-form-label">User name: </label>
+                  <input type = "text" class="form-control" name = "username" id="register-username"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Password: </label>
+                  <input type="text" class="form-control" name="password" id="register-password"/>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="register_btn">Register</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add event modal-->
+      <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="addEventModalLabel">Add a new event to your calendar</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="addEventForm">
+                <div class="form-group">
+                  <label class="col-form-label">Title: </label>
+                  <input type = "text" class="form-control" name = "event-title" id="add-event-title"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Description: </label>
+                  <textarea class="form-control" id="add-event-description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Date: </label>
+                  <input type="date" id="add-event-date"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Time: </label>
+                  <input type="time" id="add-event-time"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Invite friend: </label>
+                  <p>Please enter one name at a time with correct spelling</p>
+                  <input type="text" class="form-control" id="add-friend"/>
+                  <button type="button" class="btn btn-primary" id="addFriend_btn">Add</button>
+                  <p>Invited Friends:</p>
+                  <ul id="friendList">
+                  </ul>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Tags: </label>
+                  <select class="form-control" id="addevent-category">
+                    <option>Work</option>
+                    <option>School</option>
+                    <option>ToDo</option>
+                    <option>No category</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="addEvent_btn">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit event modal-->
+      <div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="editEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="editEventModalLabel">Check/Edit your event</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="editEventForm">
+                <div class="form-group">
+                  <label class="col-form-label">Title: </label>
+                  <input type = "text" class="form-control" name = "event-title" id="edit-event-title"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Description: </label>
+                  <textarea class="form-control" id="edit-event-description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Date: </label>
+                  <input type="date" id="edit-event-date"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Time: </label>
+                  <input type="time" id="edit-event-time"/>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Tags: </label>
+                  <select class="form-control" id="editevent-category">
+                    <option>Work</option>
+                    <option>School</option>
+                    <option>ToDo</option>
+                    <option>No category</option>
+                  </select>
+                </div>
+                <div>Event id: <p id="edit-event-id"></p> </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="editEvent_btn">Save</button>
+              <button type="button" class="btn btn-danger" id="deleteEvent_btn">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit event modal-->
+      <div class="modal fade" id="readEventModal" tabindex="-1" role="dialog" aria-labelledby="readEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="readEventModalLabel">Event:</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="readEventForm">
+                <div class="form-group">
+                  <label class="col-form-label">Title: </label>
+                  <p class="form-control"  id="read-event-title"></p>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Description: </label>
+                  <p class="form-control" id="read-event-description"></p>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Date: </label>
+                  <p id="read-event-date"></p>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Time: </label>
+                  <p id="read-event-time"></p>
+                </div>
+                <div class="form-group">
+                  <label class="col-form-label">Tag: </label>
+                  <p class="form-control" id="readevent-category"></p>
+                </div>
+                <div>Event id: <p id="read-event-id"></p> </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- calendar -->
+      <div class = "month container">
+        <div class="row">
+          <span class = "month-display col-xs-2" id="prev_month_btn">&#10094;</span>
+          <span class = "month-display col-xs-2" id="next_month_btn">&#10095;</span>
+          <span class = "month-display col-xs-8"><strong id="currentMonth"></strong><br/><span id="currentYear"></span></span>
+        </div>
+      </div>
+      <div class="container weekdays">
+        <div class="row ro">
+          <div class="la col-xs-7ths">Su</div>
+          <div class="la col-xs-7ths">Mo</div>
+          <div class="la col-xs-7ths">Tu</div>
+          <div class="la col-xs-7ths">We</div>
+          <div class="la col-xs-7ths">Th</div>
+          <div class="la col-xs-7ths">Fr</div>
+          <div class="la col-xs-7ths">Sa</div>
+        </div>
+      </div>
+      <div class = "days container">
+        <div class="row ro">
+          <div class="da col-xs-7ths" id="w0d0"></div>
+          <div class="da col-xs-7ths" id="w0d1"></div>
+          <div class="da col-xs-7ths" id="w0d2"></div>
+          <div class="da col-xs-7ths" id="w0d3"></div>
+          <div class="da col-xs-7ths" id="w0d4"></div>
+          <div class="da col-xs-7ths" id="w0d5"></div>
+          <div class="da col-xs-7ths" id="w0d6"></div>
+        </div>
+        <div class="row ro">
+          <div class="da col-xs-7ths" id="w1d0"></div>
+          <div class="da col-xs-7ths" id="w1d1"></div>
+          <div class="da col-xs-7ths" id="w1d2"></div>
+          <div class="da col-xs-7ths" id="w1d3"></div>
+          <div class="da col-xs-7ths" id="w1d4"></div>
+          <div class="da col-xs-7ths" id="w1d5"></div>
+          <div class="da col-xs-7ths" id="w1d6"></div>
+        </div>
+        <div class="row ro">
+          <div class="da col-xs-7ths" id="w2d0"></div>
+          <div class="da col-xs-7ths" id="w2d1"></div>
+          <div class="da col-xs-7ths" id="w2d2"></div>
+          <div class="da col-xs-7ths" id="w2d3"></div>
+          <div class="da col-xs-7ths" id="w2d4"></div>
+          <div class="da col-xs-7ths" id="w2d5"></div>
+          <div class="da col-xs-7ths" id="w2d6"></div>
+        </div>
+        <div class="row ro">
+          <div class="da col-xs-7ths" id="w3d0"></div>
+          <div class="da col-xs-7ths" id="w3d1"></div>
+          <div class="da col-xs-7ths" id="w3d2"></div>
+          <div class="da col-xs-7ths" id="w3d3"></div>
+          <div class="da col-xs-7ths" id="w3d4"></div>
+          <div class="da col-xs-7ths" id="w3d5"></div>
+          <div class="da col-xs-7ths" id="w3d6"></div>
+        </div>
+        <div class="row ro">
+          <div class="da col-xs-7ths" id="w4d0"></div>
+          <div class="da col-xs-7ths" id="w4d1"></div>
+          <div class="da col-xs-7ths" id="w4d2"></div>
+          <div class="da col-xs-7ths" id="w4d3"></div>
+          <div class="da col-xs-7ths" id="w4d4"></div>
+          <div class="da col-xs-7ths" id="w4d5"></div>
+          <div class="da col-xs-7ths" id="w4d6"></div>
+        </div>
+        <div class="row ro">
+          <div class="da col-xs-7ths" id="w5d0"></div>
+          <div class="da col-xs-7ths" id="w5d1"></div>
+          <div class="da col-xs-7ths" id="w5d2"></div>
+          <div class="da col-xs-7ths" id="w5d3"></div>
+          <div class="da col-xs-7ths" id="w5d4"></div>
+          <div class="da col-xs-7ths" id="w5d5"></div>
+          <div class="da col-xs-7ths" id="w5d6"></div>
+        </div>
+      </div>
+      <div class="container" id="shareDiv">
+        <h3><strong>Share your calendar with another user</strong></h3>
+        <div class="form-group">
+          <label for="shareUser">(please enter one name at a time and make sure you have the correct spelling):</label>
+          <input type="text" class="form-control" id="shareUser">
+          <button type="button" class="btn btn-primary" id="addShareUser_btn">Share!</button>
+        </div>
+      </div>
+
+
+      <script src="calendar.js"></script>
+    </body>
+</html>
